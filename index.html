@@ -29,6 +29,8 @@
       text-align: center;
       max-width: 500px;
       width: 100%;
+      /* 给卡片加一点点入场动画 */
+      animation: fadeIn 1s ease-out;
     }
     h1 {
       font-size: 28px;
@@ -41,26 +43,56 @@
       margin-bottom: 30px;
       line-height: 1.6;
     }
+    
+    /* --- 修改部分开始 --- */
+    
+    /* 定义心跳动画的关键帧 */
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.1); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.1); }
+      70% { transform: scale(1); }
+    }
+
+    /* 简单的淡入动画 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .btn {
-      display: inline-block;
+      display: inline-flex; /* 改为 inline-flex 以便更好地对齐图标和文字 */
+      align-items: center;
+      gap: 8px; /* 图标和文字的间距 */
       padding: 12px 24px;
       background: #2e7d32;
       color: white;
       border-radius: 8px;
       text-decoration: none;
       font-weight: 500;
-      transition: background 0.2s;
+      transition: all 0.3s ease; /* 增加过渡效果 */
+      cursor: pointer;
+      
+      /* 应用心跳动画：动画名 时长 缓动函数 无限循环 */
+      animation: heartbeat 2s ease-in-out infinite;
     }
+
     .btn:hover {
       background: #256729;
+      transform: scale(1.05); /* 鼠标悬停时稍微放大 */
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3); /* 增加阴影 */
     }
+    
+    /* --- 修改部分结束 --- */
   </style>
 </head>
 <body>
   <div class="box">
     <h1>欢迎来到Kevin-in-Zafu的主页 🎉</h1>
-    <p>这是我的电子名片<br>可以在这里看我的笔记，随笔或者看我发疯</p >
-    <a href=" " class="btn">前往 GitHub</a >
+    <p>这是我的电子名片<br>可以在这里看我的笔记，随笔或者看我发疯</p>
+    <!-- 在文字前加了一个爱心图标 -->
+    <a href=" " class="btn">❤️ 前往 GitHub</a>
   </div>
 </body>
 </html>
