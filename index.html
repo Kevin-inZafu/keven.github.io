@@ -12,7 +12,12 @@
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f8f9fa;
+      /* 修改背景：使用一张唯美的樱花图片，并覆盖一层半透明遮罩让文字更清晰 */
+      background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
+                  url('https://images.unsplash.com/photo-1522383225653-ed1111813069?q=80&w=1920&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; /* 背景固定，不随滚动条移动 */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -20,18 +25,46 @@
       min-height: 100vh;
       color: #333;
       padding: 20px;
+      overflow-x: hidden; /* 防止花瓣飘出屏幕出现滚动条 */
     }
+
+    /* 樱花花瓣的样式 */
+    .sakura {
+      position: fixed;
+      top: -10%;
+      z-index: -1; /* 让花瓣在卡片后面 */
+      animation: fall linear infinite;
+    }
+
+    /* 花瓣下落动画 */
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg) translateX(20px);
+        opacity: 0.3;
+      }
+    }
+
     .box {
-      background: white;
+      /* 磨砂玻璃效果：让背景模糊，提升高级感 */
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      
       padding: 40px;
       border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      /* 柔和的阴影 */
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       text-align: center;
       max-width: 500px;
       width: 100%;
-      /* 给卡片加一点点入场动画 */
       animation: fadeIn 1s ease-out;
     }
+
     h1 {
       font-size: 28px;
       margin-bottom: 16px;
@@ -39,14 +72,11 @@
     }
     p {
       font-size: 16px;
-      color: #666;
+      color: #555;
       margin-bottom: 30px;
       line-height: 1.6;
     }
     
-    /* --- 修改部分开始 --- */
-    
-    /* 定义心跳动画的关键帧 */
     @keyframes heartbeat {
       0% { transform: scale(1); }
       14% { transform: scale(1.1); }
@@ -55,44 +85,71 @@
       70% { transform: scale(1); }
     }
 
-    /* 简单的淡入动画 */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .btn {
-      display: inline-flex; /* 改为 inline-flex 以便更好地对齐图标和文字 */
+      display: inline-flex;
       align-items: center;
-      gap: 8px; /* 图标和文字的间距 */
+      gap: 8px;
       padding: 12px 24px;
       background: #2e7d32;
       color: white;
       border-radius: 8px;
       text-decoration: none;
       font-weight: 500;
-      transition: all 0.3s ease; /* 增加过渡效果 */
+      transition: all 0.3s ease;
       cursor: pointer;
-      
-      /* 应用心跳动画：动画名 时长 缓动函数 无限循环 */
       animation: heartbeat 2s ease-in-out infinite;
     }
 
     .btn:hover {
       background: #256729;
-      transform: scale(1.05); /* 鼠标悬停时稍微放大 */
-      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3); /* 增加阴影 */
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
     }
-    
-    /* --- 修改部分结束 --- */
   </style>
 </head>
 <body>
   <div class="box">
     <h1>欢迎来到Kevin-in-Zafu的主页 🎉</h1>
     <p>这是我的电子名片<br>可以在这里看我的笔记，随笔或者看我发疯</p>
-    <!-- 在文字前加了一个爱心图标 -->
     <a href=" " class="btn">❤️ 前往 GitHub</a>
   </div>
+
+  <!-- 樱花雨脚本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const body = document.querySelector('body');
+      const petalCount = 30; // 花瓣数量，可以根据需要调整
+
+      for (let i = 0; i < petalCount; i++) {
+        const petal = document.createElement('div');
+        petal.classList.add('sakura');
+        
+        // 随机生成花瓣的大小
+        const size = Math.random() * 15 + 10 + 'px';
+        petal.style.width = size;
+        petal.style.height = size;
+        
+        // 随机生成花瓣的位置
+        petal.style.left = Math.random() * 100 + 'vw';
+        
+        // 随机生成动画时长（下落速度）
+        const duration = Math.random() * 5 + 5 + 's'; // 5-10秒
+        petal.style.animationDuration = duration;
+        
+        // 随机延迟，让花瓣不是同时落下
+        petal.style.animationDelay = Math.random() * 5 + 's';
+        
+        // 设置花瓣内容 (使用emoji 🌸 或 🌼)
+        petal.innerHTML = '🌸';
+        
+        body.appendChild(petal);
+      }
+    });
+  </script>
 </body>
 </html>
