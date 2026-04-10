@@ -1,0 +1,44 @@
+###队列###
+队列是一种特殊的线性表，它只允许在表的一端进行插入操作，在另一端进行删除操作。我们同样使用数组来实现一个循环队列。
+#define QUEUE_MAX_SIZE 100  // 队列最大长度
+
+typedef struct {
+    int data[QUEUE_MAX_SIZE];
+    int front, rear;  // 分别指向队头和队尾
+} Queue;
+
+// 初始化队列
+void initQueue(Queue *q) {
+    q->front = q->rear = 0;
+}
+
+// 判断队列是否为空
+int queueIsEmpty(Queue *q) {
+    return q->front == q->rear;
+}
+
+// 判断队列是否已满
+int queueIsFull(Queue *q) {
+    return (q->rear + 1) % QUEUE_MAX_SIZE == q->front;
+}
+
+// 入队
+void enqueue(Queue *q, int value) {
+    if (queueIsFull(q)) {
+        printf("Queue is full!\n");
+        return;
+    }
+    q->data[q->rear] = value;
+    q->rear = (q->rear + 1) % QUEUE_MAX_SIZE;  // 循环队列处理
+}
+
+// 出队
+int dequeue(Queue *q) {
+    if (queueIsEmpty(q)) {
+        printf("Queue is empty!\n");
+        exit(1);
+    }
+    int temp = q->data[q->front];
+    q->front = (q->front + 1) % QUEUE_MAX_SIZE;
+    return temp;
+}

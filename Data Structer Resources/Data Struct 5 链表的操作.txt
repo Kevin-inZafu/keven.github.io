@@ -1,0 +1,110 @@
+###链表的操作
+#include <stdio.h>
+#include <stdlib.h>
+
+// 链表节点结构体
+typedef struct Node {
+    int data;           // 节点存储的数据
+    struct Node *next;  // 指向下一个节点的指针
+} Node;
+
+// 初始化链表
+Node* initLinkedList() {
+    return NULL;  // 空链表
+}
+
+// 在链表末尾插入节点
+void insertLinkedList(Node **head, int value) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (*head == NULL) {
+        *head = newNode;  // 如果链表为空，新节点成为头节点
+    } else {
+        Node *current = *head;
+        while (current->next != NULL) {
+            current = current->next;  // 找到链表末尾
+        }
+        current->next = newNode;  // 将新节点插入末尾
+    }
+}
+
+// 删除指定值的节点
+void deleteLinkedList(Node **head, int value) {
+    Node *current = *head;
+    Node *prev = NULL;
+
+    while (current != NULL && current->data != value) {
+        prev = current;
+        current = current->next;
+    }
+
+    if (current == NULL) {
+        return;  // 未找到要删除的节点
+    }
+
+    if (prev == NULL) {
+        *head = current->next;  // 删除头节点
+    } else {
+        prev->next = current->next;  // 删除中间或尾部节点
+    }
+
+    free(current);  // 释放内存
+}
+
+// 查找指定值的节点
+Node* findLinkedList(Node *head, int value) {
+    Node *current = head;
+    while (current != NULL) {
+        if (current->data == value) {
+            return current;  // 返回找到的节点
+        }
+        current = current->next;
+    }
+    return NULL;  // 未找到
+}
+
+// 打印链表
+void printLinkedList(Node *head) {
+    Node *current = head;
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+// 释放链表内存
+void freeLinkedList(Node *head) {
+    Node *current = head;
+    while (current != NULL) {
+        Node *temp = current;
+        current = current->next;
+        free(temp);
+    }
+}
+
+// 测试链表
+int main() {
+    Node *head = initLinkedList();
+
+    insertLinkedList(&head, 1);
+    insertLinkedList(&head, 2);
+    insertLinkedList(&head, 3);
+    printLinkedList(head);  // 输出: 1 2 3
+
+    deleteLinkedList(&head, 2);
+    printLinkedList(head);  // 输出: 1 3
+
+    Node *foundNode = findLinkedList(head, 3);
+    if (foundNode != NULL) {
+        printf("找到元素3，值为: %d\n", foundNode->data);  // 输出: 找到元素3，值为: 3
+    } else {
+        printf("未找到元素3\n");
+    }
+
+    freeLinkedList(head);  // 释放链表内存
+
+    return 0;
+}

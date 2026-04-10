@@ -1,0 +1,96 @@
+*顺序表的创建于增删改查
+1.编写函数，创建线性表(顺序表)
+typedef struct
+{
+    int size, length;
+    LELEMENT *element;
+} ALIST;
+#include <stdio.h>
+#include <stdlib.h>
+#include "AList.h"
+int main()
+{   ALIST a;
+    AListCreate(&a);
+    printf("%d %d %s\n", a.size, a.length, a.element ? "Valid" : "Error");
+    free(a.element);
+    return 0;}
+请创建以void AListCreate(ALIST *list)为接口的函数用于创建顺序表
+answer:
+void AListCreate(ALIST *list)
+{
+list->element=malloc(AListInitSize*sizeof(LELEMENT));
+    if(!list->element){
+        exit(1);
+    }
+    list->length=0;
+    list->size=AListInitSize;
+}
+2.请编写以int AListLength(const ALIST *list)为接口的函数，求线性表的长度
+answer:
+int AListLength(const ALIST *list){
+    return list->length;
+}
+3.请编写以int AListEmpty(const ALIST *list)为接口的函数，判断线性表是否为空表
+answer:
+int AListEmpty(const ALIST *list)
+{
+    if (list->length==0)
+        return 1;
+    else
+        return 0;
+}
+4.本题要求实现一个函数，在顺序表的第i个位置插入一个新的数据元素e，插入成功后顺序表的长度加1，函数返回值为1；插入失败函数返回值为0；
+函数的接口为int ListInsert(SqList &L,int i,ElemType e)
+answer:
+int ListInsert(SqList &L,int i,ElemType e)
+{
+    if((L.length==MAXSIZE)||(i>L.length+1)||(i<1))
+        return 0;
+     else
+    {int real_i=i-1;
+     int j=L.length;
+     for(j;j>real_i;j--){
+        L.elem[j]=L.elem[j-1];
+     } L.elem[real_i]=e;
+        L.length+=1;
+        return 1;
+    }
+}
+5.创建顺序表，在顺序表中插入一个结点
+接口分别为void DispList(SqList *L);  //输出顺序表,每个结点之间空格符间隔。
+bool ListInsert(SqList *&L,int i,ElemType e);  //在顺序表第i个位置上插入一个结点，插入成功时，返回TRUE,否则返回FALSE.
+answer：
+bool ListInsert(SqList *&L,int i,ElemType e)
+{
+    if((L->length==MaxSize)||(i>L->length+1)||(i<1))
+        return false;
+     else
+    {int real_i=i-1;
+     int j=L->length;
+     for(j;j>real_i;j--){
+        L->data[j]=L->data[j-1];
+     } L->data[real_i]=e;
+        L->length+=1;
+        return true;
+    }
+}
+void DispList(SqList *L)
+{
+    for(int i=0;i<L->length;i++)
+        printf("%c ",L->data[i]);
+    printf("\n");
+}
+6.实现一个函数，要求返回顺序表的最大值，空表返回0。题目保证顺序表中所有元素都为正整数.接口为int GetMax(SqList L)
+answer:
+int GetMax(SqList L)
+{
+    if(L.length==0)
+        return 0;
+    else
+    {int max=L.elem[0];
+        for(int j=1;j<L.length;j++)
+            if(L.elem[j]>max)
+                max=L.elem[j];
+    return max;
+    }
+}
