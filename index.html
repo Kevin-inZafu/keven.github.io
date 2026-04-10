@@ -12,12 +12,12 @@
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      /* 修改背景：使用一张唯美的樱花图片，并覆盖一层半透明遮罩让文字更清晰 */
-      background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
-                  url('https://images.unsplash.com/photo-1522383225653-ed1111813069?q=80&w=1920&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
+      /* --- 渐变背景设置 --- */
+      /* 这里设置了从左上到右下的蓝紫色渐变，你可以随意修改颜色 */
+      background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
       background-attachment: fixed; /* 背景固定，不随滚动条移动 */
+      /* ------------------- */
+      
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -34,6 +34,7 @@
       top: -10%;
       z-index: -1; /* 让花瓣在卡片后面 */
       animation: fall linear infinite;
+      pointer-events: none; /* 让鼠标事件穿透花瓣 */
     }
 
     /* 花瓣下落动画 */
@@ -49,7 +50,7 @@
     }
 
     .box {
-      /* 磨砂玻璃效果：让背景模糊，提升高级感 */
+      /* 磨砂玻璃效果 */
       background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -123,7 +124,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const body = document.querySelector('body');
-      const petalCount = 30; // 花瓣数量，可以根据需要调整
+      const petalCount = 30; // 花瓣数量
 
       for (let i = 0; i < petalCount; i++) {
         const petal = document.createElement('div');
@@ -144,7 +145,7 @@
         // 随机延迟，让花瓣不是同时落下
         petal.style.animationDelay = Math.random() * 5 + 's';
         
-        // 设置花瓣内容 (使用emoji 🌸 或 🌼)
+        // 设置花瓣内容 (使用emoji 🌸)
         petal.innerHTML = '🌸';
         
         body.appendChild(petal);
