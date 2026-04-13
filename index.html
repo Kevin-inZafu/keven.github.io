@@ -271,7 +271,12 @@
         progressBar.style.width = progressPercent + "%";
       }
     });
-
+<audio controls>
+  <source src="your-audio-file.mp3" type="audio/mpeg">
+  <source src="your-audio-file.ogg" type="audio/ogg">
+  <source src="your-audio-file.wav" type="audio/wav">
+  您的浏览器不支持音频播放。
+</audio>
     // 点击进度条跳转
     function setProgress(e) {
       const width = this.clientWidth;
